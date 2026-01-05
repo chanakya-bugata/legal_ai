@@ -2,11 +2,13 @@
 PDF Parser with OCR support using pdfplumber and Tesseract
 """
 
+import numpy as np  # Add this
 import pdfplumber
 import pytesseract
 from PIL import Image
 from typing import List, Dict, Optional
 import io
+import re
 
 
 class PDFParser:
