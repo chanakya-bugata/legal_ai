@@ -142,6 +142,9 @@ class ClauseExtractor(nn.Module):
             if pred == 0:  # B-Clause - Start new clause
                 # Save previous clause
                 if current_clause:
+                    # Ensure token_end_idx is set before appending
+                    if 'token_end_idx' not in current_clause:
+                        current_clause['token_end_idx'] = i
                     clauses.append(current_clause)
                 
                 # Start new clause
@@ -163,12 +166,18 @@ class ClauseExtractor(nn.Module):
         
         # Handle final clause
         if current_clause:
-            current_clause['token_end_idx'] = len(tokens)
+            # Ensure token_end_idx is set
+            if 'token_end_idx' not in current_clause:
+                current_clause['token_end_idx'] = len(tokens)
             clauses.append(current_clause)
         
         # Convert token spans to character spans and clean text
         final_clauses = []
         for clause in clauses:
+            # Ensure required keys exist
+            if 'token_start_idx' not in clause or 'token_end_idx' not in clause:
+                continue
+                
             # Join tokens properly
             clause_text = self._join_tokens(clause['tokens'])
             

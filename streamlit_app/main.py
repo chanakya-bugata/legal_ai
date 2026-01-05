@@ -236,11 +236,28 @@ if uploaded_file is not None or st.session_state.get('demo_active', False):
             st.dataframe(risk_data.sort_values('Risk', ascending=False), 
                         width='stretch')
             
-            # Risk heatmap
+            # Risk heatmap (horizontal bar chart sorted by risk)
             if len(risk_data) > 1:
-                fig = px.imshow([[risk_data['Risk'].values]], 
-                               color_continuous_scale='RdYlGn_r',
-                               title="Risk Heatmap")
+                risk_sorted = risk_data.sort_values('Risk', ascending=True)
+                fig = go.Figure(go.Bar(
+                    x=risk_sorted['Risk'].values,
+                    y=risk_sorted['Clause'].values,
+                    orientation='h',
+                    marker=dict(
+                        color=risk_sorted['Risk'].values,
+                        colorscale='RdYlGn_r',
+                        showscale=True,
+                        colorbar=dict(title="Risk Score")
+                    ),
+                    text=[f"{r:.2f}" for r in risk_sorted['Risk'].values],
+                    textposition='outside'
+                ))
+                fig.update_layout(
+                    title="Risk Score Heatmap (Sorted by Risk)",
+                    xaxis_title="Risk Score",
+                    yaxis_title="Clause",
+                    height=max(400, len(risk_data) * 30)
+                )
                 st.plotly_chart(fig, width='stretch')
 
         with tab4:
