@@ -159,7 +159,7 @@ class LegalIntelligencePipeline:
             
             # 📝 STEP 3: CLAUSE EXTRACTION (YOUR EXCELLENT EXTRACTOR)
             print("📝 3/6 STEP 3: Clause Extraction...")
-            raw_clauses = self.clause_extractor.extract_clauses(doc_text)
+            raw_clauses = self.clause_extractor.extract_clauses(doc_text, self.encoder.tokenizer)
             
             # Format clauses
             clauses = []

@@ -6,7 +6,7 @@ Complete demo-ready interface for the full pipeline.
 Novel Algorithms:
 🔗 CLKG | ⚠️ GNN Risk | 🔍 Hybrid RAG
 """
-import plotly.express
+import plotly.express as px
 import streamlit as st
 import sys
 import os
@@ -179,7 +179,7 @@ if uploaded_file is not None or st.session_state.get('demo_active', False):
                 fig = go.Figure(go.Histogram(x=risks, nbinsx=20, 
                                            marker_color='indianred'))
                 fig.update_layout(title="Risk Score Distribution", height=400)
-                st.plotly_chart(fig, use_container_width=True)
+                st.plotly_chart(fig, width='stretch')
         
         with tab2:
             st.header("🔗 Causal Knowledge Graph")
@@ -223,7 +223,7 @@ if uploaded_file is not None or st.session_state.get('demo_active', False):
                                    customdata=node_risk))
 
             fig.update_layout(showlegend=False, height=500, title_text="Causal Legal Knowledge Graph")
-            st.plotly_chart(fig, use_container_width=True)
+            st.plotly_chart(fig, width='stretch')
 
         with tab3:
             st.header("⚠️ Risk Analysis")
@@ -234,14 +234,14 @@ if uploaded_file is not None or st.session_state.get('demo_active', False):
             ])
             
             st.dataframe(risk_data.sort_values('Risk', ascending=False), 
-                        use_container_width=True)
+                        width='stretch')
             
             # Risk heatmap
             if len(risk_data) > 1:
                 fig = px.imshow([[risk_data['Risk'].values]], 
                                color_continuous_scale='RdYlGn_r',
                                title="Risk Heatmap")
-                st.plotly_chart(fig, use_container_width=True)
+                st.plotly_chart(fig, width='stretch')
 
         with tab4:
             st.header("🔍 Ask Questions")
