@@ -8,6 +8,7 @@ between legal clauses using hybrid embedding + classification approach.
 
 from typing import List, Dict
 import numpy as np
+import re
 from .clkg_graph import CLKGGraph, Clause, CausalEdge, CausalRelationType
 from src.document_processing.document_encoder import DocumentEncoder
 
