@@ -193,17 +193,13 @@ class LegalIntelligencePipeline:
             for clause_id, risk_score in risks.items():
                 if clause_id in clkg.clauses:
                     clkg.clauses[clause_id].risk_score = risk_score
-
+            
             # Initialize retriever
             retriever = HYBRID_RETRIEVER.HybridRetriever(
                 clauses=clauses,
                 graph=clkg,
                 encoder=self.encoder
             )
-            # Persist state for downstream queries / reports
-            self.retriever = retriever
-            self.risks = risks
-            self.clkg = clkg
             
             # Final analysis
             stats = clkg.get_statistics()
