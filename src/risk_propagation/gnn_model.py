@@ -87,7 +87,7 @@ class RiskPropagationGNN(nn.Module):
         self.gat_layers.append(
             GATConv(
                 hidden_dim,
-                hidden_dim,  # Output full hidden_dim, not divided by heads
+                hidden_dim // num_heads,
                 heads=1,  # Single head for final aggregation
                 concat=False,
                 dropout=dropout,
